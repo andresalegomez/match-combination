@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const divResultados = document.getElementById("divResultados");
     const vaciarBoton = document.getElementById("vaciarBoton");
     const enviarBoton = document.getElementById("enviarBoton");
-    const runes = ["blue", "green", "red", "black", "gray", "yellow"];
+    const runes = ["blue", "green", "red", "black", "white", "yellow"];
     let CombinacionCorrecta = [];
     let combinacionUsuario = [];
     let dificultad;
@@ -17,44 +17,79 @@ document.addEventListener("DOMContentLoaded", () => {
         seleccionDificultad.style.display = "block";
     });
 
-    // Función para generar combinación correcta
+    // Función para generar combinación correcta sin runas repetidas
     const getCombinacionAlAzar = (length) => {
         const combinacion = [];
-        for (let i = 0; i < length; i++) {
-            combinacion.push(runes[Math.floor(Math.random() * runes.length)]);
+        while (combinacion.length < length) {
+            const rune = runes[Math.floor(Math.random() * runes.length)];
+            if (!combinacion.includes(rune)) {
+                combinacion.push(rune);
+            }
         }
-        console.log(combinacion)
+        console.log(combinacion);
         return combinacion;
     };
 
+
     // Al seleccionar dificultad
     seleccionDificultad.addEventListener("click", (event) => {
-        if (event.target.classList.contains("dificultad")) {
-            dificultad = event.target.dataset.level;
-            const combinacionLength = { Facil: 3, Moderada: 4, Dificil: 5, Dios: 6 }[dificultad];
-            CombinacionCorrecta = getCombinacionAlAzar(combinacionLength);
-            seleccionDificultad.style.display = "none";
-            tablero.style.display = "block";
+        dificultad = event.target.dataset.level;
+        const combinacionLength = { Facil: 3, Moderada: 4, Dificil: 5, Maxima: 6 }[dificultad];
+        CombinacionCorrecta = getCombinacionAlAzar(combinacionLength);
+        seleccionDificultad.style.display = "none";
+        tablero.style.display = "block";
+
+        let plantilla = [];
+
+        for (let i = 0; i < combinacionLength; i++) {
+
+            let divbase = document.createElement("div");
+            divbase.classList.add("result-circle");
+            divbase.style.width = "30px";
+            divbase.style.marginBottom = "2px";
+            divbase.style.backgroundColor = 'gray';
+            divbase.style.height = "30px";
+            divbase.style.border = "1px solid white";
+            divbase.style.borderRadius = "50%";
+
+            plantilla.push(divbase);
+
         }
+
+        plantilla.forEach(p => {
+            divCombinacionUsuario.append(p);
+        });
+
+        // copyVariableCombinacionUsuario.forEach(a => {
+
+
+        // });
     });
 
-    // Al hacer clic en una runa
     document.querySelectorAll(".rune").forEach((rune) => {
         rune.addEventListener("click", () => {
             const color = rune.dataset.color;
-            console.log(color)
-            combinacionUsuario.push(color);
-            updateDivCombinacionUsuario();
+            console.log(color);
+
+            // Verifica si la runa no está repetida en combinacionUsuario
+                combinacionUsuario.push(color);
+                updateDivCombinacionUsuario();
+
+                // Verifica si el tamaño ha alcanzado el límite de dificultad
+                if (combinacionUsuario.length === CombinacionCorrecta.length) {
+                    enviarBoton.click(); 
+                }
         });
     });
+
 
     const updateDivCombinacionUsuario = () => {
         divCombinacionUsuario.innerHTML = "";
         combinacionUsuario.forEach(color => {
             const colorDiv = document.createElement("div");
-            colorDiv.style.backgroundColor = color; // Establece el color de fondo
-            colorDiv.classList.add("rune");         // Usa la clase "rune" para aplicar el estilo de círculo
-            colorDiv.style.width = "30px";          // Ajusta el tamaño para que se vea bien en el display
+            colorDiv.style.backgroundColor = color;
+            colorDiv.classList.add("rune");
+            colorDiv.style.width = "30px";
             colorDiv.style.height = "30px";
             divCombinacionUsuario.appendChild(colorDiv);
         });
@@ -79,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const circulos = [];
 
         copyVariableCombinacionUsuario.forEach(a => {
-            console.log('asss: ' + a);
             const combinacionUsuario = document.createElement("div");
             combinacionUsuario.classList.add("result-circle");
             combinacionUsuario.style.width = "30px";
