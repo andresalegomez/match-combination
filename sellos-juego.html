@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Runas</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+    <div id="container">
+        <button id="botonJugar">Jugar</button>
+
+        <div id="seleccionDificultad" style="display: none;">
+            <button class="dificultad" data-level="Facil">Fácil</button>
+            <button class="dificultad" data-level="Moderada">Moderada</button>
+            <button class="dificultad" data-level="Dificil">Difícil</button>
+            <button class="dificultad" data-level="Dios">Dios</button>
+        </div>
+
+        <div id="tablero" style="display: none;">
+            <div class="tablero-container">
+                <div id="mainDiv">
+                    <div id="combinacionUsuario"></div>
+                    <button id="vaciarBoton">Borrar</button>
+                    <button id="enviarBoton">Enviar</button>
+                </div>
+                <div id="rightDiv">
+                    <div id="divResultados"></div>
+                </div>
+                <div id="bottomDiv">
+                    <div class="rune" data-color="blue" style="background-color: blue;"></div>
+                    <div class="rune" data-color="green" style="background-color: green;"></div>
+                    <div class="rune" data-color="red" style="background-color: red;"></div>
+                    <div class="rune" data-color="black" style="background-color: black;"></div>
+                    <div class="rune" data-color="gray" style="background-color: gray;"></div>
+                    <div class="rune" data-color="yellow" style="background-color: yellow;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script src="script.js"></script>
+
+</html>
